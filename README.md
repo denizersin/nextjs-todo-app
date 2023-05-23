@@ -2,9 +2,15 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
+Frist, create a mysql local db and update DATABASE_URL in .env file
+
+
+run the development server:
 
 ```bash
+npm install
+npx prisma migrate dev --name init
+
 npm run dev
 # or
 yarn dev
