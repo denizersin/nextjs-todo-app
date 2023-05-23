@@ -1,0 +1,196 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  overflow-x: hidden;
+  align-items: center;
+  background-color: rgb(233, 233, 215);
+}
+
+#root {
+  width: 100%;
+}
+
+.home-container {
+  display: flex;
+  width: 100%;
+  height: 600px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  align-items: center;
+}
+
+.calendar-container {
+  width: 30%;
+  flex-shrink: 0;
+  height: 100%;
+  height: 500px;
+  position: relative;
+  z-index: 1;
+  opacity: 1;
+  transition: opacity .3s linear;
+}
+
+.calendar-container.active{
+  opacity: .5;
+}
+
+
+.Calendar {
+  font-size: 10px;
+  background: #fff;
+  box-shadow: 0 1em 4em rgba(0, 0, 0, 0.07);
+  border-radius: 1em;
+  position: relative;
+  padding-top: 1.2em;
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+  overflow: hidden;
+  min-height: 100px;
+  max-width: 90vw;
+  width: 100%;
+  height: 400px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  border: .5px solid rgba(146, 145, 145, 0.86);
+}
+
+.Calendar__sectionWrapper {
+  min-height: 400px;
+  padding: 0px;
+}
+
+.Calendar__section {
+  padding: 0px;
+}
+
+.Calendar__day {
+  width: 45px;
+  height: 45px;
+}
+
+
+.tasks {
+  flex-grow: 0;
+  flex-shrink: 0;
+  width: 90%;
+  min-height: 90%;
+  height: 90%;
+  position: relative;
+  z-index: 2;
+  /* box-shadow: -19px -2px 19px 0px #000;
+   */
+  border-radius: 20px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) -30px 0px 30px;
+  transition: all .3s ease-out;
+  background-color: white;
+  overflow-y: auto;
+
+}
+
+.tasks.active {
+  transform: translateX(-25%);
+}
+
+.home-container {}
+
+@media screen and (max-width: 800px) {
+
+  body {
+    align-items: baseline;
+  }
+
+  .home-container {
+    flex-wrap: wrap;
+    height: 800px;
+    justify-content: center;
+  }
+
+  .calendar-container {
+    height: max-content;
+    width: 100%;
+  }
+
+
+  .Calendar {
+    width: 100%;
+  }
+
+  .tasks.active {
+    transform: translateY(-55%);
+  }
+
+  .tasks {
+    min-height: 600px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px -10px 10px;
+  }
+}
+
+
+.Calendar__weekRow {
+  display: flex;
+  justify-content: center;
+}
+
+@layer components {
+  .btn {
+    @apply py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75;
+  }
+}
+
+.center-non-static{
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}
