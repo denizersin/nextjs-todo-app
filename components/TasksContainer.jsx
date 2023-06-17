@@ -59,23 +59,26 @@ export default function TasksContainer({ eventsData }) {
         <div className={'TasksContainer component w-full h-full flex flex-col items-center'}>
             <button className='btn rounded-full' onClick={() => updateQuery(['isFormActive'], true)}>+</button>
             <div className="c w-full h-12 bg-red-300 flex">
-                <div className="c c1 w-[140px] border">Event Date</div>
-                <div className="c c2 w-[140px] border">Event Start Time</div>
-                <div className="c c3 w-[140px] border border" >Event Finish Time</div>
-                <div className="c c5 w-[140px] border">Event status</div>
-                <div className="c c4 w-[140px] border">Event Type</div>
-                <div className="c c5 grow border bg-green-300">Event Action</div>
+                <div className="c c1 w-[150px] flex items-center justify-center border">Event Date</div>
+                <div className="c c2 w-[150px] flex items-center justify-center border">Event Start Time</div>
+                <div className="c c3 w-[150px] flex items-center justify-center border border" >Event Finish Time</div>
+                <div className="c c5 w-[150px] flex items-center justify-center border">Event status</div>
+                <div className="c c4 w-[150px] flex items-center justify-center border">Event Type</div>
+                <div className="c c5 grow border bg-green-300 flex items-center justify-center">Event Action</div>
             </div>
             {eventsData.map
                 (data => {
                     const isCompleted = data.eventStatus == 'completed';
+                    const isTimePassed=data.finishTime.getTime()<new Date().getTime();
                     return (
                         <div key={data.eventId} className='w-full'>
-                            <div className="c w-full   bg-red-300 flex">
-                                <div className="c c1 w-[140px] flex items-center border">{data.startTime.toLocaleDateString()}</div>
-                                <div className="c c2 w-[140px] flex items-center border">{data.startTime.toLocaleTimeString()}</div>
-                                <div className="c c3 w-[140px] flex items-center border border" >{data.finishTime.toLocaleTimeString()}</div>
-                                <div className="c c5 w-[140px] flex items-center border flex">
+                            <div className={classNames( "c w-full   bg-red-200 flex",{
+                                'opacity-50':isTimePassed ,
+                            })}>
+                                <div className="c c1 w-[150px] flex items-center border">{data.startTime.toLocaleDateString()}</div>
+                                <div className="c c2 w-[150px] flex items-center border">{data.startTime.toLocaleTimeString()}</div>
+                                <div className="c c3 w-[150px] flex items-center border border" >{data.finishTime.toLocaleTimeString()}</div>
+                                <div className="c c5 w-[150px] flex items-center border flex">
                                     <div className={classNames('', { 'line-through': isCompleted })}>
                                         {data.eventStatus}
                                     </div>
@@ -95,14 +98,10 @@ export default function TasksContainer({ eventsData }) {
                                         </button>
                                     </div>
                                 </div>
-                                <div className="c c4 w-[140px] border flex items-center">{data.eventType}</div>
-                                <div className="c c5 grow border bg-green-300 flex items-center">{data.eventAction}</div>
+                                <div className="c c4 w-[150px] border flex items-center">{data.eventType}</div>
+                                <div className="c c5 grow border bg-green-200 flex items-center">{data.eventAction}</div>
                             </div>
-                            {/* <div className="update">
-                                <button onClick={(e) => handleDeleteTask(e, data)} className='btn'>delete</button>
-                                <button onClick={(e) => handleCompleteTask(e, data)} className='btn'>complete</button>
-                            </div> */}
-                            {/* <button className='btn'>undo</button> */}
+
                         </div>
                     )
                 }

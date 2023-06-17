@@ -51,11 +51,6 @@ export default function Home({ eventsData }) {
 
 
 
-
-
-
-
-
     return (
         <div className="home-container  ">
             <div onClick={(e) => {
@@ -89,20 +84,6 @@ export default function Home({ eventsData }) {
                 }}
             >
                 <TasksContainer eventsData={currDayTasks} />
-                {/* <div class="flex mb-4 items-center gap-1">
-                <p class="w-full line-through text-green">Submit Todo App Component to Tailwind
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus vero non harum earum voluptas iure repellendus deleniti facere mollitia esse tempore tenetur ipsum eos quaerat ab labore quibusdam, dolore suscipit.
-                    Components</p>
-
-                <button class="flex shrink-0 grow-0 p-2 w-10 h-10 rounded-full justify-center  border-2 border-gray-400 hover:text-white text-grey border-grey hover:bg-slate-600"> </button>
-                <button class="flex shrink-0 grow-0 p-2 w-10 h-10 rounded-full justify-center  border-2 border-gray-400 text-red border-red hover:text-white hover:bg-red-500"></button>
-            </div>
-
-            <div class="flex mb-4 items-center gap-1">
-                <p class="w-full text-grey-darkest">Add another component to Tailwind Components</p>
-                <button class="flex shrink-0 grow-0 p-2 w-10 h-10 rounded-full justify-center  border-2 border-gray-400 hover:text-white text-green border-green hover:bg-green-600"></button>
-                <button class="flex shrink-0 grow-0 p-2 w-10 h-10 rounded-full justify-center  border-2 border-gray-400 text-red border-red hover:text-white hover:bg-red-500"></button>
-            </div> */}
 
             </div>
 
