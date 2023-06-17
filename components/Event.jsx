@@ -1,10 +1,11 @@
 import React, { useRef, useState } from "react";
 import { useCreateEvent } from "@/hooks";
-import { useQueryClient } from "react-query";
 import { useSession } from "next-auth/react";
 import { toast } from "react-hot-toast";
+import { getQueryData, updateQuery } from "@/hooks/utils";
+import { useQueryClient } from "@tanstack/react-query";
 
-function Event({ setIsFormActive }) {
+function Event({ }) {
     const session = useSession();
 
     const queryClient = useQueryClient();
@@ -51,10 +52,10 @@ function Event({ setIsFormActive }) {
         formData.delete('date');
 
         formData.append('startTime',
-            new Date(`${date}T${eventStartTime}:00.000Z`).toISOString()
+            new Date(`${date}T${eventStartTime}+03:00`).toISOString()
         );
         formData.append('finishTime',
-            new Date(`${date}T${eventFinishTime}:00.000Z`).toISOString()
+            new Date(`${date}T${eventFinishTime}+03:00`).toISOString()
         );
         for (var pair of formData.entries()) {
             console.log(pair[0] + ', ' + pair[1]);
@@ -67,49 +68,81 @@ function Event({ setIsFormActive }) {
 
 
     return (
-        <div className="wrapper fixed z-10 center-non-static w-full h-[100vh] flex justify-center items-center bg-slate-200/50">
-
-            <div className="container w-[80%] h-[80%] bg-slate-300 relative">
-                <form onSubmit={handleSubmit} ref={formRef}>
-                    <label>
-                        Date:
-                        <input name="date" type="date" value={date} onChange={(e) => setDate(e.target.value)} />
+        <div className="fixed z-10 inset-0 flex justify-center items-center bg-slate-800/50">
+            <div className="container w-3/5 h-4/5 p-2 pt-4 bg-slate-600  relative rounded-lg">
+                <form onSubmit={handleSubmit} ref={formRef} className="flex flex-col space-y-4">
+                    <label className="flex flex-col">
+                        <span className="mb-1 text-white">Date:</span>
+                        <input
+                            name="date"
+                            type="date"
+                            value={date}
+                            onChange={(e) => setDate(e.target.value)}
+                            className="px-2 py-1 w-[300px] max-sm:w-full border rounded"
+                        />
                     </label>
-                    <br />
-                    <label>
-                        Start Time:
-                        <input name="startTime" type="time" value={eventStartTime} onChange={(e) => setEventStartTime(
-                            e.target.value
-                        )} />
+                    <label className="flex flex-col">
+                        <span className="mb-1 text-white">Start Time:</span>
+                        <input
+                            name="startTime"
+                            type="time"
+                            value={eventStartTime}
+                            onChange={(e) => setEventStartTime(e.target.value)}
+                            className="px-2 py-1 w-[300px] max-sm:w-full border rounded"
+                        />
                     </label>
-                    <br />
-                    <label>
-                        Finish Time:
-                        <input name="finishTime" type="time" value={eventFinishTime} onChange={(e) => { setEventFinishTime(e.target.value); console.log(e.target) }} />
+                    <label className="flex flex-col">
+                        <span className="mb-1 text-white">Finish Time:</span>
+                        <input
+                            name="finishTime"
+                            type="time"
+                            value={eventFinishTime}
+                            onChange={(e) => {
+                                setEventFinishTime(e.target.value);
+                                console.log(e.target);
+                            }}
+                            className="px-2 py-1 w-[300px] max-sm:w-full border rounded"
+                        />
                     </label>
-                    <br />
-                    <label>
-                        Type:
-                        <input name="eventType" type="text" value={eventType} onChange={(e) => setEventType(e.target.value)} />
+                    <label className="flex flex-col">
+                        <span className="mb-1 text-white">Type:</span>
+                        <input
+                            name="eventType"
+                            type="text"
+                            value={eventType}
+                            onChange={(e) => setEventType(e.target.value)}
+                            className="px-2 py-1 w-[300px] max-sm:w-full border rounded"
+                        />
                     </label>
-                    <br />
-                    <label>
-                        Event Explanation:
-                        <textarea name="eventAction" value={eventAction} onChange={(e) => { setEventAction(e.target.value); }} />
+                    <label className="flex flex-col">
+                        <span className="mb-1 text-white">Event Explanation:</span>
+                        <textarea
+                            name="eventAction"
+                            value={eventAction}
+                            onChange={(e) => {
+                                setEventAction(e.target.value);
+                            }}
+                            className="px-2 py-1  border rounded"
+                        />
                     </label>
-                    <br />
-                    <button type="submit">Save</button>
+                    <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded">
+                        Save
+                    </button>
                 </form>
                 <button
-                    onClick={() => setIsFormActive(false)}
-                    className="absolute top-0 left-full">X</button>
+                    onClick={() => updateQuery(['isFormActive'], (prev) => !prev)}
+                    className="absolute top-0 right-0 btn  bg-red-600"
+                >
+                    X
+                </button>
             </div>
-            {
-                status === 'loading' && <div className="absolute top-0 left-0 w-full h-full bg-slate-200/50 flex justify-center items-center">
+            {status === 'loading' && (
+                <div className="fixed inset-0 flex justify-center items-center bg-slate-200/50">
                     <div className="loader">Ekleniyor....</div>
                 </div>
-            }
+            )}
         </div>
+
     );
 }
 

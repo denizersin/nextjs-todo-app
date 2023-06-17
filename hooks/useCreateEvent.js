@@ -1,5 +1,4 @@
-import { QueryClient, useMutation } from "react-query";
-
+import { useMutation } from "@tanstack/react-query";
 
 async function create(data) {
 

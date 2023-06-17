@@ -1,5 +1,4 @@
-
-import { useMutation } from 'react-query'
+import { useMutation } from "@tanstack/react-query"
 
 async function updateEvent(data) {
     return fetch(`http://localhost:3000/api/event/${data.id}/update`, {

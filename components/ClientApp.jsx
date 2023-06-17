@@ -1,18 +1,17 @@
 "use client";
 import HomeContainer from '@/components/HomeContainer';
-import React from 'react'
-import { QueryClient, QueryClientProvider } from 'react-query';
+import React, { useEffect } from 'react'
+import { checkNotifPermission } from "@/notifs/notificationApi";
 import "./index.css"
 import { Toaster } from 'react-hot-toast';
-const queryClient = new QueryClient()
 
 export default function ClientApp({ initialEventsData }) {
-
+    useEffect(() => {
+        checkNotifPermission();
+    }, []);
     return (
         <>
-            <QueryClientProvider client={queryClient}>
-                <HomeContainer initialEventsData={initialEventsData} />
-            </QueryClientProvider>
+            <HomeContainer initialEventsData={initialEventsData} />
             <Toaster
                 position="top-center"
                 reverseOrder={false}

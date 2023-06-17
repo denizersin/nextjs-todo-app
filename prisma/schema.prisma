@@ -25,12 +25,13 @@ model User {
 }
 
 model Event {
-  id          Int      @id @default(autoincrement())
-  startTime   DateTime
-  finishTime  DateTime
-  eventType   String
-  eventAction String
-  eventStatus String   @default("on progress")
-  owner       User     @relation(fields: [ownerId], references: [id])
-  ownerId     Int
+  id             Int      @id @default(autoincrement())
+  startTime      DateTime
+  finishTime     DateTime
+  eventType      String
+  eventAction    String
+  eventStatus    String   @default("on progress")
+  owner          User     @relation(fields: [ownerId], references: [id])
+  ownerId        Int
+  isUserNotified Boolean  @default(false)
 }

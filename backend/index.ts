@@ -4,7 +4,7 @@ import * as bcrypt from "bcrypt";
 
 
 
-//User and Task Events
+
 async function getEvents(userId: number): Promise<Event[] | []> {
     let events = await prisma.event.findMany({ where: { ownerId: userId } });
     return events;

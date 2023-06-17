@@ -1,9 +1,14 @@
 import { useDeleteEvent, useUpdateEvent } from '@/hooks';
+import { updateQuery } from '@/hooks/utils';
+import { useQueryClient } from '@tanstack/react-query';
 import React from 'react'
 import { toast } from 'react-hot-toast';
-import { useQueryClient } from 'react-query';
+import { IoMdRemoveCircle } from 'react-icons/io';
+import { BsCheck2Circle } from 'react-icons/bs';
+import classNames from 'classnames';
 
-const filterTasks = (currTaskType, allTasks, setIsFormActive) => {
+
+const filterTasks = (currTaskType, allTasks) => {
     let filtered;
     switch (currTaskType) {
         case 'hepsi':
@@ -22,7 +27,7 @@ const filterTasks = (currTaskType, allTasks, setIsFormActive) => {
 
 
 
-export default function TasksContainer({ eventsData, setIsFormActive }) {
+export default function TasksContainer({ eventsData }) {
     const queryClient = useQueryClient();
     const onSuccessDelete = (data) => {
         if (data.success) {
@@ -41,32 +46,69 @@ export default function TasksContainer({ eventsData, setIsFormActive }) {
         else
             toast.error("Event could not be updated" + data.message);
     }
-    const { mutate: deleteMutate, status: deleteStatus } = useDeleteEvent(onSuccessDelete)
-    const { mutate: updateMutate, status: updateStatus } = useUpdateEvent(onSuccessUpdate)
+    const { mutate: deleteMutate, status: deleteStatus, isLoading: isLoadingDelete } = useDeleteEvent(onSuccessDelete)
+    const { mutate: updateMutate, status: updateStatus, isLoading: isLoadingUpdate } = useUpdateEvent(onSuccessUpdate)
     const handleDeleteTask = async (e, taskData) => {
         deleteMutate(taskData.id)
     }
     const handleCompleteTask = (e, taskData) => {
         updateMutate({ ...taskData, eventStatus: 'completed' })
     }
-
+    console.log(new Date().toLocaleTimeString())
     return (
-        <div className={'TasksContainer component w-full h-full'}> <span>TasksContainer</span>
-            <div onClick={(e) => { setIsFormActive(true) }}>create</div>
+        <div className={'TasksContainer component w-full h-full flex flex-col items-center'}>
+            <button className='btn rounded-full' onClick={() => updateQuery(['isFormActive'], true)}>+</button>
+            <div className="c w-full h-12 bg-red-300 flex">
+                <div className="c c1 w-[140px] border">Event Date</div>
+                <div className="c c2 w-[140px] border">Event Start Time</div>
+                <div className="c c3 w-[140px] border border" >Event Finish Time</div>
+                <div className="c c5 w-[140px] border">Event status</div>
+                <div className="c c4 w-[140px] border">Event Type</div>
+                <div className="c c5 grow border bg-green-300">Event Action</div>
+            </div>
             {eventsData.map
-                (data => (
-                    <div key={data.eventId}>
-                        {
-                            Object.entries(data).map(([key, value]) => (
-                                <div key={key}>{key} : {JSON.stringify(value)}</div>
-                            )
-                            )}
-                        <div className="">{data.eventStatus}</div>
-                        <button onClick={(e) => handleDeleteTask(e, data)} className='btn'>delete</button>
-                        <button onClick={(e) => handleCompleteTask(e, data)} className='btn'>complete</button>
-                        {/* <button className='btn'>undo</button> */}
-                    </div>
-                ))}
+                (data => {
+                    const isCompleted = data.eventStatus == 'completed';
+                    return (
+                        <div key={data.eventId} className='w-full'>
+                            <div className="c w-full   bg-red-300 flex">
+                                <div className="c c1 w-[140px] flex items-center border">{data.startTime.toLocaleDateString()}</div>
+                                <div className="c c2 w-[140px] flex items-center border">{data.startTime.toLocaleTimeString()}</div>
+                                <div className="c c3 w-[140px] flex items-center border border" >{data.finishTime.toLocaleTimeString()}</div>
+                                <div className="c c5 w-[140px] flex items-center border flex">
+                                    <div className={classNames('', { 'line-through': isCompleted })}>
+                                        {data.eventStatus}
+                                    </div>
+                                    <div className="c2 flex flex-col gap-2 items-center p-1">
+                                        <button onClick={(e) => handleDeleteTask(e, data)} className=''>
+                                            <IoMdRemoveCircle
+                                                className={classNames('text-red-600 text-3xl', {
+                                                    'scale-50': isLoadingDelete,
+                                                })} />
+                                        </button>
+                                        <button onClick={(e) => handleCompleteTask(e, data)} className=''>
+                                            <BsCheck2Circle
+                                                className={classNames('text-green-600 text-3xl', {
+                                                    'scale-50': isLoadingUpdate,
+                                                    'opacity-50': isCompleted
+                                                })} />
+                                        </button>
+                                    </div>
+                                </div>
+                                <div className="c c4 w-[140px] border flex items-center">{data.eventType}</div>
+                                <div className="c c5 grow border bg-green-300 flex items-center">{data.eventAction}</div>
+                            </div>
+                            {/* <div className="update">
+                                <button onClick={(e) => handleDeleteTask(e, data)} className='btn'>delete</button>
+                                <button onClick={(e) => handleCompleteTask(e, data)} className='btn'>complete</button>
+                            </div> */}
+                            {/* <button className='btn'>undo</button> */}
+                        </div>
+                    )
+                }
+                )
+
+            }
 
         </div>
     )

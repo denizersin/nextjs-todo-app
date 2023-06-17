@@ -1,5 +1,5 @@
 
-import { useMutation } from 'react-query'
+import { useMutation } from "@tanstack/react-query";
 
 async function deleteEvent(id) {
     return fetch(`http://localhost:3000/api/event/${id}/delete`, {
