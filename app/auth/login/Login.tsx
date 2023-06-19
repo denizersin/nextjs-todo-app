@@ -22,7 +22,6 @@ const Login: FC<IpageProps> = ({ }: IpageProps) => {
             callbackUrl: "/", //! Where to redirect to on success.
         })
 
-        console.log(e);
         setIsSubmitting(true);
     };
 
@@ -33,7 +32,6 @@ const Login: FC<IpageProps> = ({ }: IpageProps) => {
         }
     }, [isSubmitting])
 
-    console.log(sesssion);
     return (
         <div className="flex justify-center mt-40">
             <div className="container max-w-[400px]">

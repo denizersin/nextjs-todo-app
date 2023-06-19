@@ -8,7 +8,6 @@ export async function POST(
 ) {
     const data = await request.json();
     const id = params.id; // 'a', 'b', or 'c'
-    console.log(data)
     const newData = await updateEvent(data)
     if (newData) {
         return new Response(JSON.stringify({ success: true, data: newData }));

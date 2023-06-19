@@ -7,7 +7,6 @@ export async function POST(
     }
 ) {
     const data = await request.json();
-    console.log(data);
     const newData = await createEvent(data)
     if (newData) {
         return new Response(JSON.stringify({ success: true, data: newData}));

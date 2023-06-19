@@ -10,7 +10,6 @@ async function getEvents(userId: number): Promise<Event[] | []> {
     return events;
 }
 async function updateEvent(event: Event): Promise<Event | null> {
-    console.log(event);
     let updatedEvent = await prisma.event.update({ where: { id: event.id }, data: event });
     return updatedEvent;
 }

@@ -5,7 +5,7 @@ import { toast } from "react-hot-toast";
 import { getQueryData, updateQuery } from "@/hooks/utils";
 import { useQueryClient } from "@tanstack/react-query";
 
-function Event({ }) {
+function TaskForm({ }) {
     const session = useSession();
 
     const queryClient = useQueryClient();
@@ -35,7 +35,6 @@ function Event({ }) {
     const handleSubmit = async (event) => {
         event.preventDefault();
         let formData = new FormData(formRef.current);
-        console.log(date)
         setHourToDate(formData);
         const formDataObj = {};
         formData.forEach((value, key) => (formDataObj[key] = value));
@@ -57,9 +56,6 @@ function Event({ }) {
         formData.append('finishTime',
             new Date(`${date}T${eventFinishTime}+03:00`).toISOString()
         );
-        for (var pair of formData.entries()) {
-            console.log(pair[0] + ', ' + pair[1]);
-        }
         return;
 
     }
@@ -99,7 +95,6 @@ function Event({ }) {
                             value={eventFinishTime}
                             onChange={(e) => {
                                 setEventFinishTime(e.target.value);
-                                console.log(e.target);
                             }}
                             className="px-2 py-1 w-[300px] max-sm:w-full border rounded"
                         />
@@ -146,7 +141,7 @@ function Event({ }) {
     );
 }
 
-export default Event;
+export default TaskForm;
 
 
 const dateToUtc = (date) => {

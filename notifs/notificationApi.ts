@@ -8,7 +8,6 @@ let currInterval: any = null;
 export const checkNotifPermission = () => {
     if (Notification.permission !== 'granted') {
         Notification.requestPermission().then(function (permission) {
-            console.log(permission);
         });
     }
 }
@@ -28,7 +27,6 @@ export const notifications = (eventsData: Event[], mutateEvent: UseMutationResul
                 var notification = new Notification(title, { body });
             }
         })
-        console.log(new Date().getTime());
     }, 500);
 
 

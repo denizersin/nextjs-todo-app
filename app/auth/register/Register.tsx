@@ -22,14 +22,12 @@ const Register: FC<IpageProps> = ({ }: IpageProps) => {
     // On form submit, call the register function
 
     const registerUser = async () => {
-        console.log('qwe');
         setIsLoading(true);
         let data = await fetch('http://localhost:3000/api/user', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password, name, firstName, lastName, tcNum, phoneNum, adress }),
         })
-        console.log(data);
         let Data: any = await data.json();
         alert(JSON.stringify(Data));
         if (Data.succsess) {

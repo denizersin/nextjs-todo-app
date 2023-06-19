@@ -8,7 +8,6 @@ export default function Nav() {
 
     const session = useSession()
     const user = session.data?.user;
-    console.log(session)
     useEffect(() => {
         if (session.status === 'unauthenticated') {
             signIn();

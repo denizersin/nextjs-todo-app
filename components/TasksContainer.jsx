@@ -54,7 +54,6 @@ export default function TasksContainer({ eventsData }) {
     const handleCompleteTask = (e, taskData) => {
         updateMutate({ ...taskData, eventStatus: 'completed' })
     }
-    console.log(new Date().toLocaleTimeString())
     return (
         <div className={'TasksContainer component w-full h-full flex flex-col items-center'}>
             <button className='btn rounded-full' onClick={() => updateQuery(['isFormActive'], true)}>+</button>
